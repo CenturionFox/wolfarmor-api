@@ -1,4 +1,14 @@
 package com.attributestudios.wolfarmor.api.util;
 
-public class Recipes {
+import net.minecraft.item.crafting.IRecipe;
+import static net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
+
+@ObjectHolder(Resources.MOD_ID)
+public abstract class Recipes {
+
+    /**
+     * The leather armor dyeing recipe.
+     */
+    @ObjectHolder("leather_wolf_armor_dyed")
+    public static IRecipe LEATHER_ARMOR_DYES;
 }

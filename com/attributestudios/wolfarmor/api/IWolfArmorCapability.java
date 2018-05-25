@@ -3,7 +3,6 @@ package com.attributestudios.wolfarmor.api;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import com.attributestudios.wolfarmor.api.util.annotation.Future;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
@@ -26,7 +25,6 @@ public interface IWolfArmorCapability {
     @Nonnull
     InventoryBasic getInventory();
 
-    @Future
     @Nonnegative
     int getMaxSizeInventory();
 

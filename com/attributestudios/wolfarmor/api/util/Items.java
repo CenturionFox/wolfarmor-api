@@ -1,9 +1,9 @@
-package com.attributestudios.wolfarmor.api;
+package com.attributestudios.wolfarmor.api.util;
 
 import net.minecraft.item.Item;
 import static net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
-@ObjectHolder(Strings.MOD_ID)
+@ObjectHolder(Resources.MOD_ID)
 public abstract class Items
 {
     /**

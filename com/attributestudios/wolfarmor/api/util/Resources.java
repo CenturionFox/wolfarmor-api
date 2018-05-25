@@ -1,18 +1,13 @@
 package com.attributestudios.wolfarmor.api.util;
 
-import com.attributestudios.wolfarmor.api.util.annotation.ApiHelper;
-import net.minecraft.item.Item;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.fml.common.registry.EntityEntry;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Contains definitions for constant strings and resource locations
  */
-public abstract class Strings {
+public abstract class Resources {
 
     /**
      * The name of the mod.
@@ -27,7 +22,14 @@ public abstract class Strings {
     /**
      * Resource location for the wolf backpacks.
      */
+    @SideOnly(Side.CLIENT)
     public static final ResourceLocation TEXTURE_WOLF_BACKPACK = new ResourceLocation(MOD_ID, "textures/models/wolf_pack.png");
+
+    /**
+     * Resource location for wolf inventory.
+     */
+    @SideOnly(Side.CLIENT)
+    public static final ResourceLocation TEXTURE_GUI_WOLF_INVENTORY = new ResourceLocation(Resources.MOD_ID, "textures/gui/wolf.png");
 
     /**
      * Resource location for the dungeon chest injection loot table.
@@ -67,7 +69,7 @@ public abstract class Strings {
     /**
      * Resource location for the chainmail wolf armor item
      */
-    public static final ResourceLocation ITEM_CHAINMAIL_WOLF_ARMOR_LOCATION = new ResourceLocation(MOD_ID, "chainmail_wolf_armor");
+    public static final ResourceLocation ITEM_CHAINMAIL_WOLF_ARMOR = new ResourceLocation(MOD_ID, "chainmail_wolf_armor");
 
     /**
      * Resource location for the leather wolf armor item
@@ -80,13 +82,5 @@ public abstract class Strings {
      */
     @Deprecated
     public static final ResourceLocation ENTITY_WOLF_ARMORED_LOCATION = new ResourceLocation(MOD_ID, "wolf_armored");
-
-    @ApiHelper
-    public static abstract class Entities {
-        @ObjectHolder(MOD_ID + ":wolf_armored")
-        @Deprecated
-        @ApiHelper
-        public static EntityEntry WOLF_ARMORED = null;
-    }
 
 }

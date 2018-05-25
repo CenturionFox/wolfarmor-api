@@ -1,4 +1,13 @@
 package com.attributestudios.wolfarmor.api.util;
 
-public class Criteria {
+import net.minecraft.advancements.ICriterionTrigger;
+
+import static net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
+
+@ObjectHolder(Resources.MOD_ID)
+public abstract class Criteria {
+
+    @SuppressWarnings("rawtypes")
+    public static ICriterionTrigger EQUIP_WOLF_ARMOR;
+
 }

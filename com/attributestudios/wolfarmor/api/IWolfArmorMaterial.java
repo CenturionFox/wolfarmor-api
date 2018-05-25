@@ -1,4 +1,4 @@
-package com.attributestudios.wolfarmor.api.item;
+package com.attributestudios.wolfarmor.api;
 
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -15,22 +15,27 @@ public interface IWolfArmorMaterial {
      * Armor material for cloth wolf armor.
      */
     IWolfArmorMaterial CLOTH = new __implementation("leather", 80, 6D, 15, true, 0xA06540, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, true, Items.LEATHER, 0.0F);
+
     /**
      * Armor material for chainmail wolf armor.
      */
     IWolfArmorMaterial CHAINMAIL = new __implementation("chainmail", 180, 12D, 12, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, Items.IRON_NUGGET, 0.0F);
+
     /**
      * Armor material for iron wolf armor.
      */
     IWolfArmorMaterial IRON = new __implementation("iron", 240, 15D, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, Items.IRON_INGOT, 0.0F);
+
     /**
      * Armor material for gold wolf armor.
      */
     IWolfArmorMaterial GOLD = new __implementation("gold", 112, 12D, 25, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, Items.GOLD_INGOT, 0.0F);
+
     /**
      * Armor material for diamond wolf armor.
      */
     IWolfArmorMaterial DIAMOND = new __implementation("diamond", 528, 20D, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, Items.DIAMOND, 2.0F);
+
     /**
      * The maximum attainable armor value with vanilla wolf armor types.
      */
