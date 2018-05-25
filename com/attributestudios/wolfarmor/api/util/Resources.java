@@ -37,6 +37,16 @@ public abstract class Resources {
     public static final ResourceLocation LOOT_TABLE_DUNGEON_CHEST_INJECT = new ResourceLocation(MOD_ID, "chests/inject/dungeon");
 
     /**
+     * Resource location for the armor up achievement
+     */
+    public static final ResourceLocation ADVANCEMENT_ARMOR_UP = new ResourceLocation(MOD_ID, "husbandry/armor_up");
+
+    /**
+     * Resource location for the wolf pack achievement
+     */
+    public static final ResourceLocation ADVANCEMENT_WOLF_PACK = new ResourceLocation(MOD_ID, "husbandry/wolf_pack");
+
+    /**
      * Resource location for the wolf armor capability
      */
     public static final ResourceLocation CAPABILITY_WOLF_ARMOR = new ResourceLocation(MOD_ID, "wolf_armor");
@@ -45,6 +55,11 @@ public abstract class Resources {
      * Resource location for the wolf armor equip criteria trigger
      */
     public static final ResourceLocation CRITERIA_TRIGGER_EQUIP_WOLF_ARMOR = new ResourceLocation(MOD_ID, "equip_wolf_armor");
+
+    /**
+     * Resource location for the wolf chest equip criteria trigger
+     */
+    public static final ResourceLocation CRITERIA_TRIGGER_EQUIP_WOLF_CHEST = new ResourceLocation(MOD_ID, "equip_wolf_backpack");
 
     /**
      * Resource location for the leather armor dyeing recipe.

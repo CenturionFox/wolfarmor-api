@@ -10,4 +10,6 @@ public abstract class Criteria {
     @SuppressWarnings("rawtypes")
     public static ICriterionTrigger EQUIP_WOLF_ARMOR;
 
+    @SuppressWarnings("rawtypes")
+    public static ICriterionTrigger EQUIP_WOLF_CHEST;
 }

@@ -26,7 +26,6 @@ public interface IProxy {
     /**
      * Registers criteria triggers.
      */
-    @Deprecated
     void registerCriteriaTriggers();
 
     IThreadListener getThreadFromContext(MessageContext context);
