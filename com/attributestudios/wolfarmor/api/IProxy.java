@@ -1,4 +1,4 @@
-package com.attributestudios.wolfarmor.api.util;
+package com.attributestudios.wolfarmor.api;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IThreadListener;
