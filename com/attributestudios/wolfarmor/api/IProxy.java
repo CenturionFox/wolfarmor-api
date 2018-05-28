@@ -3,9 +3,11 @@ package com.attributestudios.wolfarmor.api;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IThreadListener;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.Nonnull;
 
@@ -13,6 +15,7 @@ public interface IProxy {
     void preInit(@Nonnull FMLPreInitializationEvent preInitializationEvent);
     void init(@Nonnull FMLInitializationEvent initializationEvent);
     void postInit(@Nonnull FMLPostInitializationEvent postInitializationEvent);
+    void loadComplete(@Nonnull FMLLoadCompleteEvent loadCompleteEvent);
 
     void registerEntityRenderingHandlers();
     void registerEventListeners();
@@ -31,4 +34,6 @@ public interface IProxy {
     IThreadListener getThreadFromContext(MessageContext context);
 
     EntityPlayer getPlayerFromContext(MessageContext context);
+
+    Side getCurrentSide();
 }

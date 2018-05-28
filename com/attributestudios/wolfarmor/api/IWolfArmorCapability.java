@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 
 
 public interface IWolfArmorCapability {
@@ -24,6 +25,8 @@ public interface IWolfArmorCapability {
 
     @Nonnull
     InventoryBasic getInventory();
+
+    void setInventoryItem(int index, @Nonnull ItemStack itemStack);
 
     @Nonnegative
     int getMaxSizeInventory();

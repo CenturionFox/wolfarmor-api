@@ -10,5 +10,5 @@ public abstract class Recipes {
      * The leather armor dyeing recipe.
      */
     @ObjectHolder("leather_wolf_armor_dyed")
-    public static IRecipe LEATHER_ARMOR_DYES;
+    public static final IRecipe LEATHER_ARMOR_DYES = null;
 }

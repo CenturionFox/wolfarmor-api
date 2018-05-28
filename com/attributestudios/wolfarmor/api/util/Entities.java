@@ -12,5 +12,5 @@ public abstract class Entities {
      */
     @ObjectHolder("wolf_armored")
     @Deprecated
-    public static EntityEntry WOLF_ARMORED = null;
+    public static final EntityEntry WOLF_ARMORED = null;
 }
