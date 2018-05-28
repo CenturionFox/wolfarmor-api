@@ -22,13 +22,11 @@ public abstract class Resources {
     /**
      * Resource location for the wolf backpacks.
      */
-    @SideOnly(Side.CLIENT)
     public static final ResourceLocation TEXTURE_WOLF_BACKPACK = new ResourceLocation(MOD_ID, "textures/models/wolf_pack.png");
 
     /**
      * Resource location for wolf inventory.
      */
-    @SideOnly(Side.CLIENT)
     public static final ResourceLocation TEXTURE_GUI_WOLF_INVENTORY = new ResourceLocation(Resources.MOD_ID, "textures/gui/wolf.png");
 
     /**
