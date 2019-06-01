@@ -1,4 +1,4 @@
-package com.attributestudios.wolfarmor.api.client;
+package dev.satyrn.wolfarmor.api.client;
 
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;

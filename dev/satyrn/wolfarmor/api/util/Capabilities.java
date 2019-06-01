@@ -1,6 +1,6 @@
-package com.attributestudios.wolfarmor.api.util;
+package dev.satyrn.wolfarmor.api.util;
 
-import com.attributestudios.wolfarmor.api.IWolfArmorCapability;
+import dev.satyrn.wolfarmor.api.IWolfArmorCapability;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 

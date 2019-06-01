@@ -1,4 +1,4 @@
-package com.attributestudios.wolfarmor.api;
+package dev.satyrn.wolfarmor.api;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;

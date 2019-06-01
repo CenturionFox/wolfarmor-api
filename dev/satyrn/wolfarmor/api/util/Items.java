@@ -1,4 +1,4 @@
-package com.attributestudios.wolfarmor.api.util;
+package dev.satyrn.wolfarmor.api.util;
 
 import net.minecraft.item.Item;
 import static net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
