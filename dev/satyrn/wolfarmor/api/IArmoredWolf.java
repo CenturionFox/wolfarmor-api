@@ -28,4 +28,8 @@ public interface IArmoredWolf {
 
     @Nonnull
     InventoryBasic getInventory();
+
+    void dropInventoryContents();
+
+    void dropEquipment();
 }

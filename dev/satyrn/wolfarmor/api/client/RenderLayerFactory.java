@@ -20,7 +20,7 @@ public abstract class RenderLayerFactory {
     @Nullable
     public static LayerRenderer createArmorLayer(@Nonnull RenderLiving renderLiving) {
         try {
-            Class clazz = RenderLayerFactory.class.getClassLoader().loadClass("com.attributestudios.wolfarmor.client.renderer.entity.layer.LayerWolfArmor");
+            Class clazz = RenderLayerFactory.class.getClassLoader().loadClass("dev.satyrn.wolfarmor.client.renderer.entity.layer.LayerWolfArmor");
             return (LayerRenderer) clazz.getConstructor(RenderLiving.class).newInstance(renderLiving);
         }
         catch(Exception e) {
@@ -37,7 +37,7 @@ public abstract class RenderLayerFactory {
     @Nullable
     public static LayerRenderer createBackpackLayer(@Nonnull RenderLiving renderLiving) {
         try {
-            Class clazz = RenderLayerFactory.class.getClassLoader().loadClass("com.attributestudios.wolfarmor.client.renderer.entity.layer.LayerWolfBackpack");
+            Class clazz = RenderLayerFactory.class.getClassLoader().loadClass("dev.satyrn.wolfarmor.client.renderer.entity.layer.LayerWolfBackpack");
             return (LayerRenderer) clazz.getConstructor(RenderLiving.class).newInstance(renderLiving);
         } catch(Exception e) {
             return null;
