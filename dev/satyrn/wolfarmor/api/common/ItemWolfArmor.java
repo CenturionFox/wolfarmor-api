@@ -1,6 +1,8 @@
-package dev.satyrn.wolfarmor.api;
+package dev.satyrn.wolfarmor.api.common;
 
 import com.google.common.collect.Multimap;
+import dev.satyrn.wolfarmor.api.IArmoredWolf;
+import dev.satyrn.wolfarmor.api.IWolfArmorMaterial;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;

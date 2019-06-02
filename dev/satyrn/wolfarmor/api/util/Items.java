@@ -1,6 +1,6 @@
 package dev.satyrn.wolfarmor.api.util;
 
-import dev.satyrn.wolfarmor.api.ItemWolfArmor;
+import dev.satyrn.wolfarmor.api.common.ItemWolfArmor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
