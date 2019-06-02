@@ -1,7 +1,6 @@
 package dev.satyrn.wolfarmor.api;
 
 import com.google.common.collect.Multimap;
-import dev.satyrn.wolfarmor.api.util.Capabilities;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
@@ -200,8 +199,8 @@ public class ItemWolfArmor extends Item {
             if (wolf != null) {
                 ItemStack copyStack = stack.copy();
                 copyStack.setCount(1);
-                IWolfArmorCapability wolfArmor = wolf.getCapability(Capabilities.CAPABILITY_WOLF_ARMOR, null);
-                if (wolfArmor == null || !wolfArmor.canEquipItem(copyStack)) {
+                IArmoredWolf wolfArmor = (IArmoredWolf)wolf;
+                if (!wolfArmor.canEquipItem(copyStack)) {
                     return stack;
                 }
                 wolfArmor.equipArmor(copyStack);
