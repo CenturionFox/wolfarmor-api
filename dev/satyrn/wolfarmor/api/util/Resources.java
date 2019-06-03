@@ -1,8 +1,6 @@
-package com.attributestudios.wolfarmor.api.util;
+package dev.satyrn.wolfarmor.api.util;
 
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Contains definitions for constant strings and resource locations

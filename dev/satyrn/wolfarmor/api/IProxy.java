@@ -1,4 +1,4 @@
-package com.attributestudios.wolfarmor.api;
+package dev.satyrn.wolfarmor.api;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IThreadListener;
@@ -20,7 +20,6 @@ public interface IProxy {
     void registerEntityRenderingHandlers();
     void registerEventListeners();
     void registerGuiHandlers();
-    void registerCapabilities();
     void registerPackets();
     void registerLootTables();
     void registerItemRenders(@Nonnull FMLInitializationEvent initializationEvent);

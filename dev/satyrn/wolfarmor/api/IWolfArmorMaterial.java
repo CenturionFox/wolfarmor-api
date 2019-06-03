@@ -1,4 +1,4 @@
-package com.attributestudios.wolfarmor.api;
+package dev.satyrn.wolfarmor.api;
 
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;

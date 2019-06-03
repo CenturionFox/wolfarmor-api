@@ -1,4 +1,4 @@
-package com.attributestudios.wolfarmor.api.util;
+package dev.satyrn.wolfarmor.api.util;
 
 import net.minecraft.advancements.ICriterionTrigger;
 
