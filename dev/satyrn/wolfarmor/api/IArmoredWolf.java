@@ -32,4 +32,6 @@ public interface IArmoredWolf {
     void dropInventoryContents();
 
     void dropEquipment();
+
+    void dropChest();
 }
