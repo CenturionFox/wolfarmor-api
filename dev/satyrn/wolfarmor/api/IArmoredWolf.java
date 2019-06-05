@@ -1,6 +1,7 @@
 package dev.satyrn.wolfarmor.api;
 
 import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -10,6 +11,10 @@ public interface IArmoredWolf {
     boolean getHasChest();
 
     void setHasChest(boolean value);
+
+    void setChestType(@Nonnull ItemStack stack);
+
+    Item getChestType();
 
     boolean getHasArmor();
 
