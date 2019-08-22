@@ -1,4 +1,4 @@
-package dev.satyrn.wolfarmor.api;
+package dev.satyrn.wolfarmor.api.common;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IThreadListener;

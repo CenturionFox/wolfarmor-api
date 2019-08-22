@@ -1,6 +1,6 @@
 package dev.satyrn.wolfarmor.api.util;
 
-import dev.satyrn.wolfarmor.api.common.ItemWolfArmor;
+import dev.satyrn.wolfarmor.api.item.IItemWolfArmor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -45,9 +45,9 @@ public abstract class Items
     /**
      * Checks if <tt>armorItemStack</tt> is a valid wolf armor item stack.
      * @param armorItemStack The armor item to check
-     * @return <tt>true</tt> if it is a valid wolf armor item.
-     * @todo API Implementation
+     * @return <tt>true</tt> if it is a valid wolf armor item
      */
+    //todo: API Implementation
     public static boolean isValidWolfArmor(@Nonnull ItemStack armorItemStack) {
         return armorItemStack.isEmpty() || isValidWolfArmor(armorItemStack.getItem());
     }
@@ -58,6 +58,6 @@ public abstract class Items
      * @return <tt>true</tt> if it is a valid wolf armor item.
      */
     public static boolean isValidWolfArmor(@Nullable Item armorItem) {
-        return armorItem instanceof ItemWolfArmor;
+        return armorItem instanceof IItemWolfArmor;
     }
 }
