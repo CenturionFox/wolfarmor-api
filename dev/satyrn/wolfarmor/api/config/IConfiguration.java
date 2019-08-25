@@ -1,5 +1,6 @@
 package dev.satyrn.wolfarmor.api.config;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -9,14 +10,24 @@ public interface IConfiguration {
     void initializeConfig(FMLPreInitializationEvent preInitEvent);
 
     boolean getIsWolfChestEnabled();
+
     boolean getIsWolfArmorRenderEnabled();
+
     boolean getIsWolfChestRenderEnabled();
+
     boolean getIsWolfArmorDisplayEnabled();
+
     boolean getIsWolfHealthDisplayEnabled();
+
     boolean getAreHowlingUntamedWolvesEnabled();
+
     boolean getShouldWolvesEatWhenDamaged();
+
     int getWolfChestSizeHorizontal();
+
     int getWolfChestSizeVertical();
+
+    void syncSettings(NBTTagCompound settingsData);
 
     @Nonnull
     Property getSettingWolfChestsEnabled();
