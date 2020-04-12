@@ -1,11 +1,10 @@
 package dev.satyrn.wolfarmor.api.util;
 
 import net.minecraft.item.crafting.IRecipe;
-import static net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
+import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(Resources.MOD_ID)
 public abstract class Recipes {
-
     /**
      * The leather armor dyeing recipe.
      */

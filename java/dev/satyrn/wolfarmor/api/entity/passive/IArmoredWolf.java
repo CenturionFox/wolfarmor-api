@@ -1,6 +1,6 @@
 package dev.satyrn.wolfarmor.api.entity.passive;
 
-import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -32,7 +32,7 @@ public interface IArmoredWolf {
     ItemStack getArmorItemStack();
 
     @Nonnull
-    InventoryBasic getInventory();
+    Inventory getInventory();
 
     void dropInventoryContents();
 
