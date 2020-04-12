@@ -3,11 +3,10 @@ package dev.satyrn.wolfarmor.api.util;
 import dev.satyrn.wolfarmor.api.item.IItemWolfArmor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.registries.ObjectHolder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import static net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 @ObjectHolder(Resources.MOD_ID)
 public abstract class Items

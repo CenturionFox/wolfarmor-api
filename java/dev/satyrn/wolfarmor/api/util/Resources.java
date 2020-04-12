@@ -6,7 +6,6 @@ import net.minecraft.util.ResourceLocation;
  * Contains definitions for constant strings and resource locations
  */
 public abstract class Resources {
-
     /**
      * The name of the mod.
      */

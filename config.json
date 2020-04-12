@@ -1,7 +1,17 @@
 {
   "version": {
-    "major": 4,
-    "minor": 1,
+    "major": 5,
+    "minor": 0,
     "patch": 0
+  },
+  "mcp": {
+    "channel": "snapshot",
+    "version": "20190719-1.14.3"
+  },
+  "forge": {
+    "version": "28.2.0"
+  },
+  "minecraft": {
+    "version": "1.14.4"
   }
 }
