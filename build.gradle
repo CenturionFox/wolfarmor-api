@@ -27,6 +27,17 @@ archivesBaseName = 'wolfarmorapi'
 sourceCompatibility = targetCompatibility = '1.8'
 compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
+    doFirst {
+        copy {
+            from sourceSets.main.allJava
+            into "$buildDir/generated/main/java"
+            expand version: version, mcversion: config.minecraft.version, modname: config.name, modid: config.modid
+        }
+        copy {
+            from "$buildDir/generated/main/java"
+            into "$buildDir/sources/main/java"
+        }
+    }
 }
 
 sourceSets.main {

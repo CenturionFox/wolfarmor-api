@@ -10,12 +10,12 @@ public abstract class Resources {
     /**
      * The name of the mod.
      */
-    public static final String MOD_NAME = "Wolf Armor and Storage";
+    public static final String MOD_NAME = "${modname}";
 
     /**
      * The mod ID of the mod.
      */
-    public static final String MOD_ID = "wolfarmor";
+    public static final String MOD_ID = "${modid}";
 
     /**
      * Resource location for the wolf backpacks.
