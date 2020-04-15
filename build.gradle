@@ -1,0 +1,59 @@
+import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
+
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = 'http://files.minecraftforge.net/maven' }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'java'
+
+def config = null;
+
+file './config.json' withReader {
+    config = new JsonSlurper().parseText(it.text)
+}
+
+version = "${config.version.major}.${config.version.minor}.${config.version.patch}"
+group = 'dev.satyrn.wolfarmor.api'
+archivesBaseName = 'wolfarmorapi'
+
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+sourceSets.main {
+    java {
+        srcDirs 'java'
+    }
+}
+
+build {
+}
+
+minecraft {
+    version = "${config.minecraft.version}-${config.forge.version}"
+    runDir = "run"
+    mappings = config.mcp.version
+}
+
+jar {
+    manifest {
+        attributes([
+            "Specification-Title": "Wolf Armor API",
+            "Specification-Vendor": "Isabel Maskrey",
+            "Specification-Version": "1", // We are version 1 of ourselves
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"Isabel Maskrey",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}

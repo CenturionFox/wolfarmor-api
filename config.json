@@ -3,5 +3,14 @@
     "major": 4,
     "minor": 1,
     "patch": 0
+  },
+  "minecraft": {
+    "version": "1.12.2"
+  },
+  "forge": {
+    "version": "14.23.5.2838"
+  },
+  "mcp": {
+    "version": "stable_39"
   }
 }
