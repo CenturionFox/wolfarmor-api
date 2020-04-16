@@ -4,11 +4,16 @@ import groovy.json.JsonSlurper
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
         maven { url = 'http://files.minecraftforge.net/maven' }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
+}
+
+plugins {
+    id 'groovy'
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -40,9 +45,13 @@ compileJava {
     }
 }
 
-sourceSets.main {
-    java {
-        srcDirs 'java'
+sourceSets.test {
+    dependencies {
+        testCompile 'org.codehaus.groovy:groovy-all:2.5.7'
+        testCompile 'org.spockframework:spock-core'
+        testCompile 'junit:junit:4.12'
+        testRuntime 'org.objenesis:objenisis:2.6'
+        testRuntime 'net.bytebuddy:byte-buddy:1.9.3'
     }
 }
 
