@@ -1,18 +1,20 @@
 package dev.satyrn.wolfarmor.api.config
 
-import dev.satyrn.wolfarmor.api.config.Setting
+
 import net.minecraft.nbt.NBTBase
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraftforge.common.config.Configuration
+import net.minecraftforge.common.config.Property
 import spock.lang.Specification
 import spock.lang.Unroll
+
+import javax.annotation.Nonnull
 
 @Unroll
 class SettingSpec extends Specification {
 
     def createSetting(Object defaultValue) {
         return new Setting(defaultValue) {
-            @Override void loadConfiguration() {}
-            @Override void saveConfiguration() {}
             @Override Object readTag(NBTBase tag) {
                 if(tag instanceof  NBTTagCompound) {
                     NBTTagCompound compound = (NBTTagCompound) tag
@@ -21,6 +23,10 @@ class SettingSpec extends Specification {
                 return null
             }
             @Override NBTBase writeTag(Object value) { return null }
+            @Override Property getConfigurationProperty(@Nonnull Configuration config) { return null }
+            @Override void loadFromConfiguration(@Nonnull Configuration config) { }
+            @Override void saveToConfiguration(@Nonnull Configuration config) { }
+            @Override Object parse(String value) { return null }
         }
     }
 
@@ -78,7 +84,7 @@ class SettingSpec extends Specification {
         def newValue = '2 mow 3 plong'
         def setting = createSetting('derp derp derp').setValue(newValue)
         expect:
-        newValue == setting.value
+        newValue == setting.currentValue
     }
 
     def 'getFullSettingName should get the category and the setting name concatenated with a period'() {
@@ -87,7 +93,7 @@ class SettingSpec extends Specification {
         setting.name = 'name'
         setting.category = 'category'
         expect:
-        "${setting.category}.${setting.name}" == setting.getFullSettingName()
+        "${setting.category}.${setting.name}" == setting.getFullName()
     }
 
     def 'setIsSynchronizedSetting should be fluent'() {
@@ -175,7 +181,7 @@ class SettingSpec extends Specification {
         setting.writeSynchronized()
         then:
         with(setting) {
-            1 * writeTag(setting.value)
+            1 * writeTag(setting.currentValue)
         }
     }
 }
