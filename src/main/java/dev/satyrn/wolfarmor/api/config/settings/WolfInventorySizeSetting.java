@@ -1,6 +1,5 @@
-package dev.satyrn.wolfarmor.api.config.custom;
+package dev.satyrn.wolfarmor.api.config.settings;
 
-import dev.satyrn.wolfarmor.api.config.ValueSetting;
 import dev.satyrn.wolfarmor.api.util.WolfInventorySize;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagByteArray;

@@ -1,5 +1,6 @@
-package dev.satyrn.wolfarmor.api.config;
+package dev.satyrn.wolfarmor.api.config.settings;
 
+import dev.satyrn.wolfarmor.api.config.settings.Setting;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 

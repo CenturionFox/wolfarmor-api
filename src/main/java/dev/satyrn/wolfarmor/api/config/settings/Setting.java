@@ -1,5 +1,6 @@
-package dev.satyrn.wolfarmor.api.config;
+package dev.satyrn.wolfarmor.api.config.settings;
 
+import dev.satyrn.wolfarmor.api.config.IConfigurationSetting;
 import net.minecraft.nbt.NBTBase;
 import net.minecraftforge.common.config.Property;
 

@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import javax.annotation.Nonnull;
 
+@Deprecated
 public interface IConfiguration {
     void initializeConfig(FMLPreInitializationEvent preInitEvent);
 

@@ -1,7 +1,7 @@
-package dev.satyrn.wolfarmor.api.config;
+package dev.satyrn.wolfarmor.api.config.settings;
 
 import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagString;
+import net.minecraft.nbt.NBTTagDouble;
 import net.minecraftforge.common.config.Property;
 
 import javax.annotation.Nonnull;
@@ -9,16 +9,16 @@ import javax.annotation.Nonnull;
 // This file is based on the configuration system implemented in the Wearable Backpacks mod, (c) 2014-2019 copygirl.
 // Licensed under MIT.  Please see THIRDPARTY for license and notices related to the use of this code.
 /**
- * A string setting value
+ * A double setting value
  */
-public class StringSetting extends ValueSetting<String> {
+public class DoubleSetting extends ValueSetting<Double> {
     /**
-     * Instantiates a new string setting with the specified detailed value, and property type set to STRING.
+     * Instantiates a new setting with a property type of DOUBLE
      * @param defaultValue The default value
      */
-    public StringSetting(String defaultValue) {
+    public DoubleSetting(Double defaultValue) {
         super(defaultValue);
-        this.setPropertyType(Property.Type.STRING);
+        this.setPropertyType(Property.Type.DOUBLE);
     }
 
     /**
@@ -27,8 +27,8 @@ public class StringSetting extends ValueSetting<String> {
      * @param tag The NBTBase to read
      */
     @Override
-    public String readTag(NBTBase tag) {
-        return ((NBTTagString)tag).getString();
+    public Double readTag(NBTBase tag) {
+        return ((NBTTagDouble)tag).getDouble();
     }
 
     /**
@@ -38,18 +38,19 @@ public class StringSetting extends ValueSetting<String> {
      * @return The newly constructed NBT tag object.
      */
     @Override
-    public NBTBase writeTag(String value) {
-        return new NBTTagString(value);
+    public NBTBase writeTag(Double value) {
+        return new NBTTagDouble(value);
     }
 
     /**
      * Parses a string value into the setting value type
+     *
      * @param value The value to parse
      * @return The parsed setting value
      */
     @Nonnull
     @Override
-    public String parse(String value) {
-        return value;
+    public Double parse(String value) {
+        return Double.parseDouble(value);
     }
 }

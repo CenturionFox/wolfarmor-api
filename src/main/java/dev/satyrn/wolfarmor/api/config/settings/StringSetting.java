@@ -1,7 +1,7 @@
-package dev.satyrn.wolfarmor.api.config;
+package dev.satyrn.wolfarmor.api.config.settings;
 
 import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagByte;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraftforge.common.config.Property;
 
 import javax.annotation.Nonnull;
@@ -9,16 +9,16 @@ import javax.annotation.Nonnull;
 // This file is based on the configuration system implemented in the Wearable Backpacks mod, (c) 2014-2019 copygirl.
 // Licensed under MIT.  Please see THIRDPARTY for license and notices related to the use of this code.
 /**
- * A boolean setting value
+ * A string setting value
  */
-public class BooleanSetting extends ValueSetting<Boolean> {
+public class StringSetting extends ValueSetting<String> {
     /**
-     * Instantiates a new boolean setting
+     * Instantiates a new string setting with the specified detailed value, and property type set to STRING.
      * @param defaultValue The default value
      */
-    public BooleanSetting(boolean defaultValue) {
+    public StringSetting(String defaultValue) {
         super(defaultValue);
-        this.setPropertyType(Property.Type.BOOLEAN);
+        this.setPropertyType(Property.Type.STRING);
     }
 
     /**
@@ -27,8 +27,8 @@ public class BooleanSetting extends ValueSetting<Boolean> {
      * @param tag The NBTBase to read
      */
     @Override
-    public Boolean readTag(NBTBase tag) {
-        return ((NBTTagByte)tag).getByte() != 0;
+    public String readTag(NBTBase tag) {
+        return ((NBTTagString)tag).getString();
     }
 
     /**
@@ -38,8 +38,8 @@ public class BooleanSetting extends ValueSetting<Boolean> {
      * @return The newly constructed NBT tag object.
      */
     @Override
-    public NBTBase writeTag(Boolean value) {
-        return new NBTTagByte((byte)(this.getValue() ? 1 : 0));
+    public NBTBase writeTag(String value) {
+        return new NBTTagString(value);
     }
 
     /**
@@ -49,14 +49,7 @@ public class BooleanSetting extends ValueSetting<Boolean> {
      */
     @Nonnull
     @Override
-    public Boolean parse(String value) {
-        switch(value.toLowerCase()) {
-            case "true":
-                return true;
-            case "false":
-                return false;
-            default:
-                throw new IllegalArgumentException(String.format("The string '%s' is not a valid boolean.", value));
-        }
+    public String parse(String value) {
+        return value;
     }
 }

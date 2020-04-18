@@ -1,7 +1,7 @@
-package dev.satyrn.wolfarmor.api.config;
+package dev.satyrn.wolfarmor.api.config.settings;
 
 import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagDouble;
+import net.minecraft.nbt.NBTTagByte;
 import net.minecraftforge.common.config.Property;
 
 import javax.annotation.Nonnull;
@@ -9,16 +9,16 @@ import javax.annotation.Nonnull;
 // This file is based on the configuration system implemented in the Wearable Backpacks mod, (c) 2014-2019 copygirl.
 // Licensed under MIT.  Please see THIRDPARTY for license and notices related to the use of this code.
 /**
- * A double setting value
+ * A boolean setting value
  */
-public class DoubleSetting extends ValueSetting<Double> {
+public class BooleanSetting extends ValueSetting<Boolean> {
     /**
-     * Instantiates a new setting with a property type of DOUBLE
+     * Instantiates a new boolean setting
      * @param defaultValue The default value
      */
-    public DoubleSetting(Double defaultValue) {
+    public BooleanSetting(boolean defaultValue) {
         super(defaultValue);
-        this.setPropertyType(Property.Type.DOUBLE);
+        this.setPropertyType(Property.Type.BOOLEAN);
     }
 
     /**
@@ -27,8 +27,8 @@ public class DoubleSetting extends ValueSetting<Double> {
      * @param tag The NBTBase to read
      */
     @Override
-    public Double readTag(NBTBase tag) {
-        return ((NBTTagDouble)tag).getDouble();
+    public Boolean readTag(NBTBase tag) {
+        return ((NBTTagByte)tag).getByte() != 0;
     }
 
     /**
@@ -38,19 +38,25 @@ public class DoubleSetting extends ValueSetting<Double> {
      * @return The newly constructed NBT tag object.
      */
     @Override
-    public NBTBase writeTag(Double value) {
-        return new NBTTagDouble(value);
+    public NBTBase writeTag(Boolean value) {
+        return new NBTTagByte((byte)(this.getValue() ? 1 : 0));
     }
 
     /**
      * Parses a string value into the setting value type
-     *
      * @param value The value to parse
      * @return The parsed setting value
      */
     @Nonnull
     @Override
-    public Double parse(String value) {
-        return Double.parseDouble(value);
+    public Boolean parse(String value) {
+        switch(value.toLowerCase()) {
+            case "true":
+                return true;
+            case "false":
+                return false;
+            default:
+                throw new IllegalArgumentException(String.format("The string '%s' is not a valid boolean.", value));
+        }
     }
 }
