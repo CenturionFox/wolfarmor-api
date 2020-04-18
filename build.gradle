@@ -66,6 +66,14 @@ sourceSets.test {
 build {
 }
 
+processResources {
+    // copy LICENSE
+    from('/') {
+        include 'LICENSE'
+        include 'THIRDPARTY'
+    }
+}
+
 minecraft {
     version = "${config.minecraft.version}-${config.forge.version}"
     runDir = "run"
