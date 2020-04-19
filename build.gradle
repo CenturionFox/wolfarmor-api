@@ -66,6 +66,9 @@ sourceSets.test {
 build {
 }
 
+runClient.enabled = false
+runServer.enabled = false
+
 processResources {
     // copy LICENSE
     from('/') {
