@@ -88,27 +88,21 @@ public abstract class Setting<T> implements IConfigurationSetting<T> {
      * @return The property base type
      */
     @Nonnull
-    public Property.Type getPropertyType() { return this.propertyType; }
+    protected Property.Type getPropertyType() { return this.propertyType; }
 
     /**
      * Sets the configuration property base type
-     * @param type The config property type
+     * @param value The config property type
      * @return self
      */
-    @Nonnull
-    public Setting<T> setPropertyType(@Nonnull Property.Type value) {
-        this.propertyType = value;
-        return this;
-    }
+    protected void setPropertyType(@Nonnull Property.Type value) { this.propertyType = value; }
 
     /**
      * Gets the actual value, instead of the default or synchronized values
      * @return The actual value
      */
     @Nullable
-    protected T getValue() {
-        return this.value;
-    }
+    protected T getValue() { return this.value; }
 
     /**
      * Sets the value of the configuration setting.
@@ -144,9 +138,7 @@ public abstract class Setting<T> implements IConfigurationSetting<T> {
      * @return The default value of the setting.
      */
     @Nullable
-    public T getDefaultValue() {
-        return this.defaultValue;
-    }
+    public T getDefaultValue() { return this.defaultValue; }
 
     /**
      * The synchronized value for the setting
@@ -173,7 +165,7 @@ public abstract class Setting<T> implements IConfigurationSetting<T> {
      * @return If synchronized, the synchronized value will be returned.  Otherwise, the standard value will be
      * returned. If either the synchronized or standard values are null, the default value is returned.
      */
-    @Nullable
+    @Nonnull
     public T getCurrentValue() {
         if (this.isSynchronizedSetting && this.isCurrentlySynchronized) {
             return this.synchronizedValue == null ? this.defaultValue : this.synchronizedValue;

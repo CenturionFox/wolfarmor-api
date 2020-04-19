@@ -9,12 +9,19 @@ import java.util.regex.Pattern;
 /**
  * Represents a wolf's inventory size in the settings
  */
-public class WolfInventorySize implements INBTSerializable<NBTTagByteArray> {
+public final class WolfInventorySize implements INBTSerializable<NBTTagByteArray> {
     private static final byte[] DIMS_MIN = {1, 1};
-    private static final byte[] DIMS_MAX = {7, 3};
+    private static final byte[] DIMS_MAX = {5, 3};
 
     int columns = DIMS_MIN[0];
     int rows = DIMS_MIN[1];
+
+    public WolfInventorySize() { }
+
+    public WolfInventorySize(int columns, int rows) {
+        this.setColumns(columns);
+        this.setRows(rows);
+    }
 
     /**
      * Gets the number of columns in the pack
@@ -48,7 +55,8 @@ public class WolfInventorySize implements INBTSerializable<NBTTagByteArray> {
 
     /**
      * Sets the number of rows in the pack
-     * @param value
+     * @param value The number of rows in the pack
+     * @exception IllegalArgumentException The
      */
     public void setRows(int value) {
         if (value < DIMS_MIN[1] || value > DIMS_MAX[1]) {
@@ -57,6 +65,7 @@ public class WolfInventorySize implements INBTSerializable<NBTTagByteArray> {
                             value, DIMS_MIN[1], DIMS_MAX[1])
             );
         }
+        this.rows = value;
     }
 
     @Override
@@ -96,10 +105,7 @@ public class WolfInventorySize implements INBTSerializable<NBTTagByteArray> {
             throw new IllegalArgumentException(
                     String.format("The input string was not in the proper format: '%s'", pattern));
         }
-        WolfInventorySize invSize = new WolfInventorySize();
-        invSize.setColumns(Integer.parseInt(matcher.group(1)));
-        invSize.setRows(Integer.parseInt(matcher.group(2)));
-
-        return invSize;
+        return new WolfInventorySize(Integer.parseInt(matcher.group(1)),
+                Integer.parseInt(matcher.group(2)));
     }
 }

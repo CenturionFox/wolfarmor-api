@@ -47,7 +47,7 @@ public interface IConfigurationSetting<T> {
      * @return If synchronized, the synchronized value will be returned.  Otherwise, the standard value will be
      * returned. If either the synchronized or standard values are null, the default value is returned.
      */
-    @Nullable
+    @Nonnull
     T getCurrentValue();
 
     /**
@@ -103,21 +103,6 @@ public interface IConfigurationSetting<T> {
      */
     @Nonnull
     IConfigurationSetting<T> setComment(@Nonnull String value);
-
-    /**
-     * Gets the config property base type
-     * @return The property base type
-     */
-    @Nonnull
-    Property.Type getPropertyType();
-
-    /**
-     * Sets the configuration property base type
-     * @param value The config property type
-     * @return self
-     */
-    @Nonnull
-    IConfigurationSetting<T> setPropertyType(@Nonnull Property.Type value);
 
     /**
      * Gets a flag indicating whether or not this setting's value is synchronized from the host to the client instance
