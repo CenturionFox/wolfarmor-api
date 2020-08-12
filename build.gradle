@@ -76,3 +76,44 @@ publishing {
         }
     }
 }
+
+task saveConfig {
+    doLast {
+        def configFile = new File('./config.json')
+        configFile.delete()
+        configFile.write(new JsonBuilder(config).toPrettyString())
+    }
+}
+
+task reportVersionChange {
+    doLast {
+        println "Semantic version updated to ${config.version.major}.${config.version.minor}.${config.version.patch}"
+    }
+}
+
+task incrementPatchVersion {
+    finalizedBy 'saveConfig'
+    finalizedBy 'reportVersionChange'
+    doLast {
+        config.version.patch += 1
+    }
+}
+
+task incrementMinorVersion {
+    finalizedBy 'saveConfig'
+    finalizedBy 'reportVersionChange'
+    doLast {
+        config.version.patch = 0
+        config.version.minor += 1
+    }
+}
+
+task incrementMajor {
+    finalizedBy 'saveConfig'
+    finalizedBy 'reportVersionChange'
+    doLast {
+        config.version.patch = 0
+        config.version.minor = 0
+        config.version.major += 1
+    }
+}
