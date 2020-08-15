@@ -109,7 +109,10 @@ task reportVersionChange {
     }
 }
 
+def VERSIONING_GROUP = 'Versioning'
+
 task incrementPatchVersion {
+    group VERSIONING_GROUP
     finalizedBy 'saveConfig'
     finalizedBy 'gitUpdateVersion'
     finalizedBy 'reportVersionChange'
@@ -119,6 +122,7 @@ task incrementPatchVersion {
 }
 
 task incrementMinorVersion {
+    group VERSIONING_GROUP
     finalizedBy 'saveConfig'
     finalizedBy 'gitUpdateVersion'
     finalizedBy 'reportVersionChange'
@@ -130,6 +134,7 @@ task incrementMinorVersion {
 }
 
 task incrementMajor {
+    group VERSIONING_GROUP
     finalizedBy 'saveConfig'
     finalizedBy 'gitUpdateVersion'
     finalizedBy 'reportVersionChange'
@@ -160,7 +165,7 @@ task gitAddConfig(type:Exec) {
 
 task gitCommit(type:Exec) {
     def newVersionNum = "v${config.version.major}.${config.version.minor}.${config.version.patch}"
-    commandLine "git commit -m \"v${newVersionNum}\""
+    commandLine "git commit -m \"🏷 v${newVersionNum}\""
 }
 
 task gitUpdateVersion {
