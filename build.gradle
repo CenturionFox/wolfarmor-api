@@ -111,6 +111,7 @@ task reportVersionChange {
 
 task incrementPatchVersion {
     finalizedBy 'saveConfig'
+    finalizedBy 'gitUpdateVersion'
     finalizedBy 'reportVersionChange'
     doLast {
         config.version.patch += 1
@@ -119,7 +120,9 @@ task incrementPatchVersion {
 
 task incrementMinorVersion {
     finalizedBy 'saveConfig'
+    finalizedBy 'gitUpdateVersion'
     finalizedBy 'reportVersionChange'
+
     doLast {
         config.version.patch = 0
         config.version.minor += 1
@@ -128,10 +131,43 @@ task incrementMinorVersion {
 
 task incrementMajor {
     finalizedBy 'saveConfig'
+    finalizedBy 'gitUpdateVersion'
     finalizedBy 'reportVersionChange'
+
     doLast {
         config.version.patch = 0
         config.version.minor = 0
         config.version.major += 1
+    }
+}
+
+task gitCheckWorkingTree(type:Exec) {
+    commandLine "git diff HEAD"
+    standardOutput = new ByteArrayOutputStream()
+    ext.output = {
+        return standardOutput.toString()
+    }
+}
+
+task gitTagVersion(type:Exec) {
+    def newVersionNum = "v${config.version.major}.${config.version.minor}.${config.version.patch}"
+    commandLine "git tag -a v${newVersionNum} -m \"v${newVersionNum}\""
+}
+
+task gitAddConfig(type:Exec) {
+    commandLine "git add ./config.json"
+}
+
+task gitCommit(type:Exec) {
+    def newVersionNum = "v${config.version.major}.${config.version.minor}.${config.version.patch}"
+    commandLine "git commit -m \"v${newVersionNum}\""
+}
+
+task gitUpdateVersion {
+    dependsOn 'gitCheckWorkingTree'
+    if (gitCheckWorkingTree.output() == "") {
+        finalizedBy 'gitAddConfig'
+        finalizedBy 'gitTagVersion'
+        finalizedBy 'gitCommit'
     }
 }
