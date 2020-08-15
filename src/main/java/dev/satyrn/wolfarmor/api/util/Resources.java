@@ -23,11 +23,6 @@ public abstract class Resources {
     public static final ResourceLocation TEXTURE_WOLF_BACKPACK = new ResourceLocation(MOD_ID, "textures/models/wolf_pack.png");
 
     /**
-     * Resource location for wolf inventory.
-     */
-    public static final ResourceLocation TEXTURE_GUI_WOLF_INVENTORY = new ResourceLocation(Resources.MOD_ID, "textures/gui/wolf.png");
-
-    /**
      * Resource location for the dungeon chest injection loot table.
      */
     public static final ResourceLocation LOOT_TABLE_DUNGEON_CHEST_INJECT = new ResourceLocation(MOD_ID, "chests/inject/dungeon");
