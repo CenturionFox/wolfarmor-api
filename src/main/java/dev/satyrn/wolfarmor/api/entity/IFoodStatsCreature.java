@@ -2,7 +2,7 @@ package dev.satyrn.wolfarmor.api.entity;
 
 import dev.satyrn.wolfarmor.api.util.CreatureFoodStats;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 /**
  * Hunger-enabled creature interface
@@ -16,7 +16,7 @@ public interface IFoodStatsCreature {
      * @author Isabel Maskrey (satyrnidae)
      * @since 1.0.0
      */
-    @Nullable CreatureFoodStats getFoodStats();
+    @Nonnull CreatureFoodStats getFoodStats();
 
     /**
      * Adds levels of exhaustion to the creature's food stats instance
