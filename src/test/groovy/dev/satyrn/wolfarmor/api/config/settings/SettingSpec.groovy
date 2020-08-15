@@ -98,7 +98,7 @@ class SettingSpec extends Specification {
     def 'setIsSynchronizedSetting should be fluent'() {
         setup:
         def setting = createSetting('lonely path')
-        def setting2 = setting.setIsSynchronizedSetting(true)
+        def setting2 = setting.setSynchronizes(true)
         expect:
         setting2 == setting
     }
@@ -106,15 +106,15 @@ class SettingSpec extends Specification {
     def 'setIsSynchronizedSetting should set isSynchronizedSetting field'() {
         setup:
         def isSynchronizedSetting = true
-        def setting = createSetting('wandering path').setIsSynchronizedSetting(isSynchronizedSetting)
+        def setting = createSetting('wandering path').setSynchronizes(isSynchronizedSetting)
         expect:
-        isSynchronizedSetting == setting.isSynchronizedSetting
+        isSynchronizedSetting == setting.synchronizes
     }
 
     @SuppressWarnings('GroovyAccessibility')
     def 'getIsCurrentlySynchronized should always return false if the isSynchronizedSetting field is set to false'() {
         setup:
-        def setting = createSetting('default').setIsSynchronizedSetting(false)
+        def setting = createSetting('default').setSynchronizes(false)
         setting.readSynchronized(new NBTTagCompound())
         expect:
         !setting.getIsCurrentlySynchronized()
@@ -123,7 +123,7 @@ class SettingSpec extends Specification {
     @SuppressWarnings('GroovyAccessibility')
     def 'getIsCurrentlySynchronized should return the value of the isCurrentlySynchronized field if the isSynchronizedSetting field is set to true'() {
         setup:
-        def setting = createSetting('default').setIsSynchronizedSetting(true)
+        def setting = createSetting('default').setSynchronizes(true)
         setting.readSynchronized(new NBTTagCompound())
         expect:
         setting.isCurrentlySynchronized == setting.getIsCurrentlySynchronized()
@@ -132,29 +132,29 @@ class SettingSpec extends Specification {
     @SuppressWarnings('GroovyAccessibility')
     def 'getSynchronizedValue should return null if the isSynchronizedSetting field is set to false'() {
         setup:
-        def setting = createSetting('non-synced').setIsSynchronizedSetting(false)
+        def setting = createSetting('non-synced').setSynchronizes(false)
         def tag = new NBTTagCompound()
         tag.setString('value', 'should not be synchronized')
         setting.readSynchronized(tag)
         expect:
-        setting.getSynchronizedValue() == null
+        setting.getSyncedValue() == null
     }
 
     @SuppressWarnings('GroovyAccessibility')
     def 'getSynchronizedValue should return the value of synchronizedValue if the isSynchronizedSetting field is set to true'() {
         setup:
-        def setting = createSetting('synced').setIsSynchronizedSetting(true)
+        def setting = createSetting('synced').setSynchronizes(true)
         def tag = new NBTTagCompound()
         tag.setString('value', 'should be synchronized')
         setting.readSynchronized(tag)
         expect:
-        setting.getSynchronizedValue() == setting.synchronizedValue
+        setting.getSyncedValue() == setting.syncedValue
     }
 
     @SuppressWarnings('GroovyAccessibility')
     def 'readSynced should set isCurrentlySynchronized'() {
         setup:
-        def setting = createSetting('forked path').setIsSynchronizedSetting(true)
+        def setting = createSetting('forked path').setSynchronizes(true)
         setting.readSynchronized(new NBTTagCompound())
         expect:
         setting.isCurrentlySynchronized
@@ -162,7 +162,7 @@ class SettingSpec extends Specification {
 
     def 'readSynchronized should call readTag once'() {
         setup:
-        def setting = Spy(createSetting('reads synced').setIsSynchronizedSetting(true))
+        def setting = Spy(createSetting('reads synced').setSynchronizes(true))
         def tag = new NBTTagCompound()
         tag.setString('value', 'synced')
         when:
@@ -175,7 +175,7 @@ class SettingSpec extends Specification {
 
     def 'writeSynchronized should call writeTag once'() {
         setup:
-        def setting = Spy(createSetting('writes synced').setIsSynchronizedSetting(true).setValue('writes synced'))
+        def setting = Spy(createSetting('writes synced').setSynchronizes(true).setValue('writes synced'))
         when:
         setting.writeSynchronized()
         then:
