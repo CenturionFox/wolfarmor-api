@@ -106,40 +106,47 @@ task saveConfig {
 def VERSIONING_GROUP = 'Versioning'
 def SCM_GROUP = 'sourcecontrol'
 
-task incrementPatchVersion {
+task incrementPatch {
     group VERSIONING_GROUP
     dependsOn 'gitCheckWorkingTree'
+    finalizedBy 'saveConfig'
+    finalizedBy 'gitAddConfig'
+    finalizedBy 'gitTagVersion'
+    finalizedBy 'gitCommit'
+    finalizedBy 'reportVersionChange'
+
     doLast {
         println projectDir.getAbsolutePath()
         if (gitCheckWorkingTree.output() != "") {
+            saveConfig.enabled = false
+            gitAddConfig.enabled = false
+            gitTagVersion.enabled = false
+            gitCommit.enabled = false
             throw new Error("Working directory not clean!")
         } else {
-            finalizedBy saveConfig
-            finalizedBy gitAddConfig
-            finalizedBy gitTagVersion
-            finalizedBy gitCommit
-            finalizedBy reportVersionChange
-
             config.version.patch += 1
         }
     }
 }
 
-task incrementMinorVersion {
+task incrementMinor {
     group VERSIONING_GROUP
     dependsOn 'gitCheckWorkingTree'
+    finalizedBy 'saveConfig'
+    finalizedBy 'gitAddConfig'
+    finalizedBy 'gitTagVersion'
+    finalizedBy 'gitCommit'
+    finalizedBy 'reportVersionChange'
 
     doLast {
         println projectDir.getAbsolutePath()
         if (gitCheckWorkingTree.output() != "") {
+            saveConfig.enabled = false
+            gitAddConfig.enabled = false
+            gitTagVersion.enabled = false
+            gitCommit.enabled = false
             throw new Error("Working directory not clean!")
         } else {
-            finalizedBy saveConfig
-            finalizedBy gitAddConfig
-            finalizedBy gitTagVersion
-            finalizedBy gitCommit
-            finalizedBy reportVersionChange
-
             config.version.patch = 0
             config.version.minor += 1
         }
@@ -149,18 +156,21 @@ task incrementMinorVersion {
 task incrementMajor {
     group VERSIONING_GROUP
     dependsOn 'gitCheckWorkingTree'
+    finalizedBy 'saveConfig'
+    finalizedBy 'gitAddConfig'
+    finalizedBy 'gitTagVersion'
+    finalizedBy 'gitCommit'
+    finalizedBy 'reportVersionChange'
 
     doLast {
         println projectDir.getAbsolutePath()
         if (gitCheckWorkingTree.output() != "") {
+            saveConfig.enabled = false
+            gitAddConfig.enabled = false
+            gitTagVersion.enabled = false
+            gitCommit.enabled = false
             throw new Error("Working directory not clean!")
         } else {
-            finalizedBy saveConfig
-            finalizedBy gitAddConfig
-            finalizedBy gitTagVersion
-            finalizedBy gitCommit
-            finalizedBy reportVersionChange
-
             config.version.patch = 0
             config.version.minor = 0
             config.version.major += 1
@@ -183,6 +193,7 @@ task gitAddConfig(type:Exec) {
     group SCM_GROUP
     shouldRunAfter saveConfig
     workingDir projectDir.getAbsolutePath()
+    ignoreExitValue true
     executable 'git'
     args 'add', 'config.json'
 }
@@ -192,8 +203,9 @@ task gitTagVersion(type:Exec) {
     shouldRunAfter gitAddConfig
     workingDir projectDir.getAbsolutePath()
     def newVersionNum = "v${config.version.major}.${config.version.minor}.${config.version.patch}"
+    ignoreExitValue true
     executable 'git'
-    args 'tag', '-a', "v${newVersionNum}", '-m', "\"v${newVersionNum}\""
+    args 'tag', '-a', "${newVersionNum}", '-m', "\"${newVersionNum}\""
 }
 
 task gitCommit(type:Exec) {
@@ -201,13 +213,15 @@ task gitCommit(type:Exec) {
     shouldRunAfter gitTagVersion
     workingDir projectDir.getAbsolutePath()
     def newVersionNum = "v${config.version.major}.${config.version.minor}.${config.version.patch}"
+    ignoreExitValue true
     executable 'git'
-    args 'commit', '-m', "\"🏷 v${newVersionNum}\""
+    args 'commit', '-m', "\"🏷 ${newVersionNum}\""
 }
 
 task reportVersionChange {
+    group VERSIONING_GROUP
     shouldRunAfter gitCommit
     doLast {
-        println "Semantic version updated to ${config.version.major}.${config.version.minor}.${config.version.patch}"
+        println "Current semver: ${config.version.major}.${config.version.minor}.${config.version.patch}"
     }
 }
