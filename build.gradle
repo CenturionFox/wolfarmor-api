@@ -108,20 +108,20 @@ def SCM_GROUP = 'sourcecontrol'
 
 task incrementApiPatch {
     group VERSIONING_GROUP
-    dependsOn 'gitCheckWorkingTree'
+    dependsOn 'apiGitCheckWorkingTree'
     finalizedBy 'saveConfig'
-    finalizedBy 'gitAddConfig'
-    finalizedBy 'gitTagVersion'
-    finalizedBy 'gitCommit'
+    finalizedBy 'apiGitAddConfig'
+    finalizedBy 'apiGitTagVersion'
+    finalizedBy 'apiGitCommit'
     finalizedBy 'reportVersionChange'
 
     doLast {
         println projectDir.getAbsolutePath()
         if (gitCheckWorkingTree.output() != "") {
             saveConfig.enabled = false
-            gitAddConfig.enabled = false
-            gitTagVersion.enabled = false
-            gitCommit.enabled = false
+            apiGitAddConfig.enabled = false
+            apiGitTagVersion.enabled = false
+            apiGitCommit.enabled = false
             throw new Error("Working directory not clean!")
         } else {
             config.version.patch += 1
@@ -131,20 +131,20 @@ task incrementApiPatch {
 
 task incrementApiMinor {
     group VERSIONING_GROUP
-    dependsOn 'gitCheckWorkingTree'
+    dependsOn 'apiGitCheckWorkingTree'
     finalizedBy 'saveConfig'
-    finalizedBy 'gitAddConfig'
-    finalizedBy 'gitTagVersion'
-    finalizedBy 'gitCommit'
+    finalizedBy 'apiGitAddConfig'
+    finalizedBy 'apiGitTagVersion'
+    finalizedBy 'apiGitCommit'
     finalizedBy 'reportVersionChange'
 
     doLast {
         println projectDir.getAbsolutePath()
         if (gitCheckWorkingTree.output() != "") {
             saveConfig.enabled = false
-            gitAddConfig.enabled = false
-            gitTagVersion.enabled = false
-            gitCommit.enabled = false
+            apiGitAddConfig.enabled = false
+            apiGitTagVersion.enabled = false
+            apiGitCommit.enabled = false
             throw new Error("Working directory not clean!")
         } else {
             config.version.patch = 0
@@ -155,20 +155,20 @@ task incrementApiMinor {
 
 task incrementApiMajor {
     group VERSIONING_GROUP
-    dependsOn 'gitCheckWorkingTree'
+    dependsOn 'apiGitCheckWorkingTree'
     finalizedBy 'saveConfig'
-    finalizedBy 'gitAddConfig'
-    finalizedBy 'gitTagVersion'
-    finalizedBy 'gitCommit'
+    finalizedBy 'apiGitAddConfig'
+    finalizedBy 'apiGitTagVersion'
+    finalizedBy 'apiGitCommit'
     finalizedBy 'reportVersionChange'
 
     doLast {
         println projectDir.getAbsolutePath()
         if (gitCheckWorkingTree.output() != "") {
             saveConfig.enabled = false
-            gitAddConfig.enabled = false
-            gitTagVersion.enabled = false
-            gitCommit.enabled = false
+            apiGitAddConfig.enabled = false
+            apiGitTagVersion.enabled = false
+            apiGitCommit.enabled = false
             throw new Error("Working directory not clean!")
         } else {
             config.version.patch = 0
@@ -178,7 +178,7 @@ task incrementApiMajor {
     }
 }
 
-task gitCheckWorkingTree(type:Exec) {
+task apiGitCheckWorkingTree(type:Exec) {
     group SCM_GROUP
     workingDir projectDir.getAbsolutePath()
     executable 'git'
@@ -189,38 +189,50 @@ task gitCheckWorkingTree(type:Exec) {
     }
 }
 
-task gitAddConfig(type:Exec) {
+task apiGitAddConfig() {
     group SCM_GROUP
     shouldRunAfter saveConfig
-    workingDir projectDir.getAbsolutePath()
-    ignoreExitValue true
-    executable 'git'
-    args 'add', 'config.json'
+    doLast {
+        exec {
+            workingDir projectDir.getAbsolutePath()
+            ignoreExitValue true
+            executable 'git'
+            args 'add', 'config.json'
+        }
+    }
 }
 
-task gitTagVersion(type:Exec) {
+task apiGitTagVersion() {
     group SCM_GROUP
-    shouldRunAfter gitAddConfig
-    workingDir projectDir.getAbsolutePath()
-    def newVersionNum = "v${config.version.major}.${config.version.minor}.${config.version.patch}"
-    ignoreExitValue true
-    executable 'git'
-    args 'tag', '-a', "${newVersionNum}", '-m', "\"${newVersionNum}\""
+    shouldRunAfter apiGitAddConfig
+    doLast {
+        exec {
+            workingDir projectDir.getAbsolutePath()
+            def newVersionNum = "v${config.version.major}.${config.version.minor}.${config.version.patch}"
+            ignoreExitValue true
+            executable 'git'
+            args 'tag', '-a', "${newVersionNum}", '-m', "\"${newVersionNum}\""
+        }
+    }
 }
 
-task gitCommit(type:Exec) {
+task apiGitCommit() {
     group SCM_GROUP
-    shouldRunAfter gitTagVersion
-    workingDir projectDir.getAbsolutePath()
-    def newVersionNum = "v${config.version.major}.${config.version.minor}.${config.version.patch}"
-    ignoreExitValue true
-    executable 'git'
-    args 'commit', '-m', "\"🏷 ${newVersionNum}\""
+    shouldRunAfter apiGitTagVersion
+    doLast {
+        exec {
+            workingDir projectDir.getAbsolutePath()
+            def newVersionNum = "v${config.version.major}.${config.version.minor}.${config.version.patch}"
+            ignoreExitValue true
+            executable 'git'
+            args 'commit', '-m', "\"🏷 ${newVersionNum}\""
+        }
+    }
 }
 
 task reportVersionChange {
     group VERSIONING_GROUP
-    shouldRunAfter gitCommit
+    shouldRunAfter apiGitCommit
     doLast {
         println "Current semver: ${config.version.major}.${config.version.minor}.${config.version.patch}"
     }
