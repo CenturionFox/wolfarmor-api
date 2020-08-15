@@ -20,7 +20,6 @@ public interface IProxy {
     void registerEntityRenderingHandlers();
     void registerEventListeners();
     void registerGuiHandlers();
-    void registerPackets();
     void registerLootTables();
     void registerItemRenders(@Nonnull FMLInitializationEvent initializationEvent);
     void registerItemColorHandlers(@Nonnull FMLInitializationEvent initializationEvent);
