@@ -117,7 +117,7 @@ task incrementApiPatch {
 
     doLast {
         println projectDir.getAbsolutePath()
-        if (gitCheckWorkingTree.output() != "") {
+        if (apiGitCheckWorkingTree.output() != "") {
             saveConfig.enabled = false
             apiGitAddConfig.enabled = false
             apiGitTagVersion.enabled = false
@@ -140,7 +140,7 @@ task incrementApiMinor {
 
     doLast {
         println projectDir.getAbsolutePath()
-        if (gitCheckWorkingTree.output() != "") {
+        if (apiGitCheckWorkingTree.output() != "") {
             saveConfig.enabled = false
             apiGitAddConfig.enabled = false
             apiGitTagVersion.enabled = false
@@ -164,7 +164,7 @@ task incrementApiMajor {
 
     doLast {
         println projectDir.getAbsolutePath()
-        if (gitCheckWorkingTree.output() != "") {
+        if (apiGitCheckWorkingTree.output() != "") {
             saveConfig.enabled = false
             apiGitAddConfig.enabled = false
             apiGitTagVersion.enabled = false
