@@ -21,7 +21,7 @@ apply plugin: 'java'
 
 def config = null
 
-file './config.json' withReader {
+file "${projectDir.getAbsolutePath()}/config.json" withReader {
     config = new JsonSlurper().parseText(it.text)
 }
 
@@ -97,82 +97,117 @@ jar {
 
 task saveConfig {
     doLast {
-        def configFile = new File('./config.json')
+        def configFile = new File("${projectDir.getAbsolutePath()}/config.json")
         configFile.delete()
         configFile.write(new JsonBuilder(config).toPrettyString())
     }
 }
 
-task reportVersionChange {
-    doLast {
-        println "Semantic version updated to ${config.version.major}.${config.version.minor}.${config.version.patch}"
-    }
-}
-
 def VERSIONING_GROUP = 'Versioning'
+def SCM_GROUP = 'sourcecontrol'
 
 task incrementPatchVersion {
     group VERSIONING_GROUP
-    finalizedBy 'saveConfig'
-    finalizedBy 'gitUpdateVersion'
-    finalizedBy 'reportVersionChange'
+    dependsOn 'gitCheckWorkingTree'
     doLast {
-        config.version.patch += 1
+        println projectDir.getAbsolutePath()
+        if (gitCheckWorkingTree.output() != "") {
+            throw new Error("Working directory not clean!")
+        } else {
+            finalizedBy saveConfig
+            finalizedBy gitAddConfig
+            finalizedBy gitTagVersion
+            finalizedBy gitCommit
+            finalizedBy reportVersionChange
+
+            config.version.patch += 1
+        }
     }
 }
 
 task incrementMinorVersion {
     group VERSIONING_GROUP
-    finalizedBy 'saveConfig'
-    finalizedBy 'gitUpdateVersion'
-    finalizedBy 'reportVersionChange'
+    dependsOn 'gitCheckWorkingTree'
 
     doLast {
-        config.version.patch = 0
-        config.version.minor += 1
+        println projectDir.getAbsolutePath()
+        if (gitCheckWorkingTree.output() != "") {
+            throw new Error("Working directory not clean!")
+        } else {
+            finalizedBy saveConfig
+            finalizedBy gitAddConfig
+            finalizedBy gitTagVersion
+            finalizedBy gitCommit
+            finalizedBy reportVersionChange
+
+            config.version.patch = 0
+            config.version.minor += 1
+        }
     }
 }
 
 task incrementMajor {
     group VERSIONING_GROUP
-    finalizedBy 'saveConfig'
-    finalizedBy 'gitUpdateVersion'
-    finalizedBy 'reportVersionChange'
+    dependsOn 'gitCheckWorkingTree'
 
     doLast {
-        config.version.patch = 0
-        config.version.minor = 0
-        config.version.major += 1
+        println projectDir.getAbsolutePath()
+        if (gitCheckWorkingTree.output() != "") {
+            throw new Error("Working directory not clean!")
+        } else {
+            finalizedBy saveConfig
+            finalizedBy gitAddConfig
+            finalizedBy gitTagVersion
+            finalizedBy gitCommit
+            finalizedBy reportVersionChange
+
+            config.version.patch = 0
+            config.version.minor = 0
+            config.version.major += 1
+        }
     }
 }
 
 task gitCheckWorkingTree(type:Exec) {
-    commandLine "git diff HEAD"
+    group SCM_GROUP
+    workingDir projectDir.getAbsolutePath()
+    executable 'git'
+    args '--no-pager', 'diff', 'HEAD'
     standardOutput = new ByteArrayOutputStream()
     ext.output = {
         return standardOutput.toString()
     }
 }
 
-task gitTagVersion(type:Exec) {
-    def newVersionNum = "v${config.version.major}.${config.version.minor}.${config.version.patch}"
-    commandLine "git tag -a v${newVersionNum} -m \"v${newVersionNum}\""
+task gitAddConfig(type:Exec) {
+    group SCM_GROUP
+    shouldRunAfter saveConfig
+    workingDir projectDir.getAbsolutePath()
+    executable 'git'
+    args 'add', 'config.json'
 }
 
-task gitAddConfig(type:Exec) {
-    commandLine "git add ./config.json"
+task gitTagVersion(type:Exec) {
+    group SCM_GROUP
+    shouldRunAfter gitAddConfig
+    workingDir projectDir.getAbsolutePath()
+    def newVersionNum = "v${config.version.major}.${config.version.minor}.${config.version.patch}"
+    executable 'git'
+    args 'tag', '-a', "v${newVersionNum}", '-m', "\"v${newVersionNum}\""
 }
 
 task gitCommit(type:Exec) {
+    group SCM_GROUP
+    shouldRunAfter gitTagVersion
+    workingDir projectDir.getAbsolutePath()
     def newVersionNum = "v${config.version.major}.${config.version.minor}.${config.version.patch}"
-    commandLine "git commit -m \"🏷 v${newVersionNum}\""
+    executable 'git'
+    args 'commit', '-m', "\"🏷 v${newVersionNum}\""
 }
 
-task gitUpdateVersion {
-    dependsOn 'gitCheckWorkingTree'
-    if (gitCheckWorkingTree.output() == "") {
-        finalizedBy 'gitAddConfig'
-        finalizedBy 'gitTagVersion'
-        finalizedBy 'gitCommit'
+task reportVersionChange {
+    shouldRunAfter gitCommit
+    doLast {
+        println "Semantic version updated to ${config.version.major}.${config.version.minor}.${config.version.patch}"
     }
 }
