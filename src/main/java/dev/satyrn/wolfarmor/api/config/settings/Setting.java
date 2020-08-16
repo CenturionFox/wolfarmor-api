@@ -22,7 +22,7 @@ public abstract class Setting<T> implements IConfigurationSetting<T> {
     private T syncedValue;
 
     private boolean synchronizes;
-    private boolean isCurrentlySynchronized;
+    private boolean isSynchronized;
 
     private String category = "";
     private String name = "";
@@ -158,7 +158,7 @@ public abstract class Setting<T> implements IConfigurationSetting<T> {
      * @return If the setting is not a synchronized setting, this getter always returns <c>false</c>. However, for
      * synchronized settings, it will return <c>true</c> if the setting is in a synchronized state.
      */
-    public boolean getIsCurrentlySynchronized() { return this.synchronizes && this.isCurrentlySynchronized; }
+    public boolean getIsCurrentlySynchronized() { return this.synchronizes && this.isSynchronized; }
 
     /**
      * Gets the setting's category concatenated with its name.
@@ -174,7 +174,7 @@ public abstract class Setting<T> implements IConfigurationSetting<T> {
      */
     @Nonnull
     public T getCurrentValue() {
-        if (this.synchronizes && this.isCurrentlySynchronized) {
+        if (this.synchronizes && this.isSynchronized) {
             return this.syncedValue == null ? this.defaultValue : this.syncedValue;
         }
         else {
@@ -187,7 +187,7 @@ public abstract class Setting<T> implements IConfigurationSetting<T> {
      * @param tag The tag
      */
     public void readSynchronized(NBTBase tag) {
-        this.isCurrentlySynchronized = true;
+        this.isSynchronized = true;
         this.syncedValue = this.readTag(tag);
     }
 
@@ -268,7 +268,7 @@ public abstract class Setting<T> implements IConfigurationSetting<T> {
     public abstract NBTBase writeTag(T value);
 
     public void onDisconnect() {
-        this.isCurrentlySynchronized = false;
+        this.isSynchronized = false;
         this.syncedValue = null;
     }
 
