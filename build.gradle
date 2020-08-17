@@ -95,6 +95,13 @@ jar {
     }
 }
 
+task sourceJar(type: Jar, overwrite: true) {
+    dependsOn processResources
+    from "$buildDir/generated/main/java"
+    from processResources.outputs
+    archiveName = "$archivesBaseName-$version-sources.jar"
+}
+
 task saveConfig {
     doLast {
         def configFile = new File("${projectDir.getAbsolutePath()}/config.json")
