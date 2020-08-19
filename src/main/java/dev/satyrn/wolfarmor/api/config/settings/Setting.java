@@ -101,7 +101,6 @@ public abstract class Setting<T> implements IConfigurationSetting<T> {
     /**
      * Sets the configuration property base type
      * @param value The config property type
-     * @return self
      */
     protected void setPropertyType(@Nonnull Property.Type value) { this.propertyType = value; }
 
@@ -126,13 +125,13 @@ public abstract class Setting<T> implements IConfigurationSetting<T> {
 
     /**
      * Gets a flag indicating whether or not this setting's value is synchronized from the host to the client instance
-     * @return <c>true</c> if synchronization is enabled, otherwise <c>false</c>.
+     * @return {@code true} if synchronization is enabled, otherwise {@code false}.
      */
     public boolean getSynchronizes() { return this.synchronizes; }
 
     /**
      * Flags this setting as either synchronized between server and client, or unsynchronized.
-     * @param value <c>true</c> to mark synchronized, <c>false</c> for unsynchronized values.
+     * @param value {@code true} to mark synchronized, {@code false} for unsynchronized values.
      * @return self
      */
     @Nonnull
@@ -155,8 +154,8 @@ public abstract class Setting<T> implements IConfigurationSetting<T> {
 
     /**
      * Flag indicating whether or not the setting is currently synchronized to a server's setting value
-     * @return If the setting is not a synchronized setting, this getter always returns <c>false</c>. However, for
-     * synchronized settings, it will return <c>true</c> if the setting is in a synchronized state.
+     * @return If the setting is not a synchronized setting, this getter always returns {@code false}. However, for
+     * synchronized settings, it will return {@code true} if the setting is in a synchronized state.
      */
     public boolean getIsCurrentlySynchronized() { return this.synchronizes && this.isSynchronized; }
 
@@ -199,6 +198,7 @@ public abstract class Setting<T> implements IConfigurationSetting<T> {
 
     /**
      * Sets the reload action required to alter this setting
+     * @param reloadAction The action the user will need to take after altering this setting
      * @return self
      */
     public Setting<T> setReloadAction(ReloadAction reloadAction) {
@@ -228,13 +228,13 @@ public abstract class Setting<T> implements IConfigurationSetting<T> {
 
     /**
      * Check whether or not the world has to be reloaded in order to update the setting.
-     * @return <c>true</c> if the world must be reloaded in order to update the setting.
+     * @return {@code true} if the world must be reloaded in order to update the setting.
      */
     public boolean getRequiresWorldReload() { return this.reloadAction == ReloadAction.WORLD; }
 
     /**
      * Checks whether or not the game has to be reloaded in order to update the setting.
-     * @return <c>true</c> if the game must be reloaded in order to update the setting.
+     * @return {@code true} if the game must be reloaded in order to update the setting.
      */
     public boolean getRequiresMinecraftRestart() { return this.reloadAction == ReloadAction.MINECRAFT; }
 
@@ -257,6 +257,7 @@ public abstract class Setting<T> implements IConfigurationSetting<T> {
     /**
      * Loads the setting value from an NBT object.
      * @param tag The NBTBase to read
+     * @return The setting type derived from the NBT
      */
     public abstract T readTag(NBTBase tag);
 

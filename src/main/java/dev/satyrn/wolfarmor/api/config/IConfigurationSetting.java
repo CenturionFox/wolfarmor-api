@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 
 /**
  * Provides default implementation methods for configuration setting instances
- * @param <T>
+ * @param <T> The setting type
  * @since 4.2.0
  */
 public interface IConfigurationSetting<T> {
@@ -118,7 +118,7 @@ public interface IConfigurationSetting<T> {
 
     /**
      * Gets a flag indicating whether or not this setting's value is synchronized from the host to the client instance
-     * @return <c>true</c> if synchronization is enabled, otherwise <c>false</c>
+     * @return {@code true} if synchronization is enabled, otherwise {@code false}
      * @deprecated as of API 4.3.0, replaced by {@link #getSynchronizes()}
      * @since 4.2.0
      */
@@ -127,7 +127,7 @@ public interface IConfigurationSetting<T> {
 
     /**
      * Flags this setting as either synchronized between server and client, or unsynchronized.
-     * @param value <c>true</c> to mark synchronized, <c>false</c> for unsynchronized values.
+     * @param value {@code true} to mark synchronized, {@code false} for unsynchronized values.
      * @return self
      * @deprecated as of API 4.3.0, replaced by {@link #setSynchronizes(boolean)}
      * @since 4.2.0
@@ -138,25 +138,27 @@ public interface IConfigurationSetting<T> {
     /**
      * Gets a flag indicating whether or not this setting's value is synchronized from the host to the client instance
      * @apiNote This method was renamed for 4.3.0 of the API from {@link #getIsSynchronized()}
-     * @return <c>true</c> if synchronization is enabled, otherwise <c>false</c>
+     * @return {@code true} if synchronization is enabled, otherwise {@code false}
      * @since 4.3.0
      */
     boolean getSynchronizes();
 
     /**
      * Flags this setting as either synchronized between server and client, or unsynchronized.
-     * @param value <c>true</c> to mark synchronized, <c>false</c> for unsynchronized values.
+     * @param value {@code true} to mark synchronized, {@code false} for unsynchronized values.
      * @return self
      */
     @Nonnull IConfigurationSetting<T> setSynchronizes(boolean value);
 
     /**
      * Loads the setting from the configuration file
+     * @param config The configuration file
      */
     void loadFromConfiguration(@Nonnull Configuration config);
 
     /**
      * Saves the value for the setting to the configuration file
+     * @param config The configuration file
      */
     void saveToConfiguration(@Nonnull Configuration config);
 
