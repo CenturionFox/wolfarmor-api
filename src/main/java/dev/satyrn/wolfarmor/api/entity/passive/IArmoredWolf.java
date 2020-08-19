@@ -33,7 +33,7 @@ public interface IArmoredWolf extends IFoodStatsCreature, IInventoryChangedListe
 
     /**
      * Checks if the wolf has a backpack
-     * @return <c>true</c> if the wolf has a backpack; otherwise, <c>false</c>
+     * @return {@code true} if the wolf has a backpack; otherwise, {@code false}
      * @author Isabel Maskrey (satyrnidae)
      * @since 1.0.0
      */
@@ -41,7 +41,7 @@ public interface IArmoredWolf extends IFoodStatsCreature, IInventoryChangedListe
 
     /**
      * Sets the wolf to either have or not have an backpack
-     * @param hasChest <c>true</c> to add a wolf backpack, <c>false</c> to remove it
+     * @param hasChest {@code true} to add a wolf backpack, {@code false} to remove it
      * @author Isabel Maskrey (satyrnidae)
      * @since 1.0.0
      */
@@ -81,7 +81,7 @@ public interface IArmoredWolf extends IFoodStatsCreature, IInventoryChangedListe
 
     /**
      * Checks if the wolf currently has armor equipped
-     * @return <c>true</c> if the armor item is set; otherwise, <c>false</c>
+     * @return {@code true} if the armor item is set; otherwise, {@code false}
      * @author Isabel Maskrey (satyrnidae)
      * @since 1.0.0
      */
@@ -90,7 +90,7 @@ public interface IArmoredWolf extends IFoodStatsCreature, IInventoryChangedListe
     /**
      * Checks if a specific item stack can be equipped by the wolf as armor
      * @param armorItemStack The armor item stack
-     * @return <c>true</c> if the armor item can be equipped; otherwise, <c>false</c>.
+     * @return {@code true} if the armor item can be equipped; otherwise, {@code false}.
      * @author Isabel Maskrey (satyrnidae)
      * @since 1.0.0
      */
@@ -98,7 +98,7 @@ public interface IArmoredWolf extends IFoodStatsCreature, IInventoryChangedListe
 
     /**
      * Equips an item stack as armor, if possible
-     * @param armorItemStack The armor item stack to equip, provided canEquipItem is <c>true</c>
+     * @param armorItemStack The armor item stack to equip, provided canEquipItem is {@code true}
      * @author Isabel Maskrey (satyrnidae)
      * @since 1.0.0
      */
