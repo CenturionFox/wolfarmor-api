@@ -27,9 +27,6 @@ file "${projectDir.getAbsolutePath()}/config.json" withReader {
 }
 
 version = "${config.version.major}.${config.version.minor}.${config.version.patch}"
-if (project.hasProperty('channel')) {
-    version = "$version-$channel"
-}
 group = 'dev.satyrn.wolfarmor.api'
 archivesBaseName = 'wolfarmor-api'
 
@@ -49,6 +46,10 @@ def javadocArtifact = artifacts.add('default', file("$buildDir/libs/$archivesBas
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            if (project.hasProperty('channel')) {
+                version = "${project.getVersion()}-${project.getProperties()['channel']}"
+            }
+
             artifact reobfArtifact
             artifact sourcesArtifact
             artifact javadocArtifact
