@@ -249,7 +249,11 @@ task apiGitCommit() {
             def newVersionNum = "v${config.version.major}.${config.version.minor}.${config.version.patch}"
             ignoreExitValue true
             executable 'git'
-            args 'commit', '-m', "\"🏷 ${newVersionNum}\""
+            if (project.hasProperty('signing.password')) {
+                args 'commit', '-S', '-m', "\"🏷 ${newVersionNum}\""
+            } else {
+                args 'commit', '-m', "\"🏷 ${newVersionNum}\""
+            }
         }
     }
 }
@@ -263,7 +267,17 @@ task apiGitTagVersion() {
             def newVersionNum = "v${config.version.major}.${config.version.minor}.${config.version.patch}"
             ignoreExitValue true
             executable 'git'
-            args 'tag', '-a', "${newVersionNum}", '-m', "\"${newVersionNum}\""
+            if (project.hasProperty('signing.password')) {
+                args 'tag', '-s', "${newVersionNum}", '-m', "\"${newVersionNum}\""
+            } else {
+                args 'tag', '-a', "${newVersionNum}", '-m', "\"${newVersionNum}\""
+            }
+        }
+        exec {
+            workingDir projectDir.getAbsolutePath()
+            ignoreExitValue true
+            executable 'git'
+            args 'push', 'origin', '--tags'
         }
     }
 }
