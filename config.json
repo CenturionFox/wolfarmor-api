@@ -4,7 +4,7 @@
     "version": {
         "major": 4,
         "minor": 4,
-        "patch": 8
+        "patch": 9
     },
     "minecraft": {
         "version": "1.12.2"
