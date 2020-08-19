@@ -136,7 +136,7 @@ task saveConfig {
 def VERSIONING_GROUP = 'Versioning'
 def SCM_GROUP = 'Source Control'
 
-task incrementApiPatch {
+task versionPatch {
     group VERSIONING_GROUP
     dependsOn 'apiGitCheckWorkingTree'
     finalizedBy 'saveConfig'
@@ -159,7 +159,7 @@ task incrementApiPatch {
     }
 }
 
-task incrementApiMinor {
+task versionMinor {
     group VERSIONING_GROUP
     dependsOn 'apiGitCheckWorkingTree'
     finalizedBy 'saveConfig'
@@ -183,7 +183,7 @@ task incrementApiMinor {
     }
 }
 
-task incrementApiMajor {
+task versionMajor {
     group VERSIONING_GROUP
     dependsOn 'apiGitCheckWorkingTree'
     finalizedBy 'saveConfig'
