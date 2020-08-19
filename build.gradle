@@ -26,19 +26,32 @@ file "${projectDir.getAbsolutePath()}/config.json" withReader {
     config = new JsonSlurper().parseText(it.text)
 }
 
-version = "${config.minecraft.version}-${config.version.major}.${config.version.minor}.${config.version.patch}"
+version = "${config.version.major}.${config.version.minor}.${config.version.patch}"
+if (project.hasProperty('channel')) {
+    version = "$version-$channel"
+}
 group = 'dev.satyrn.wolfarmor.api'
 archivesBaseName = 'wolfarmor-api'
 
-def reobfFile = file("$buildDir/libs/$archivesBaseName-${version}.jar")
-def reobfArtifact = artifacts.add('default', reobfFile) {
+def reobfArtifact = artifacts.add('default', file("$buildDir/libs/$archivesBaseName-${version}.jar")) {
     type 'jar'
     builtBy 'reobfJar'
 }
+def sourcesArtifact = artifacts.add('default', file("$buildDir/libs/$archivesBaseName-$version-sources.jar")) {
+    type 'jar'
+    builtBy 'sourceJar'
+}
+def javadocArtifact = artifacts.add('default', file("$buildDir/libs/$archivesBaseName-$version-javadoc.jar")) {
+    type 'jar'
+    builtBy 'javadocJar'
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
             artifact reobfArtifact
+            artifact sourcesArtifact
+            artifact javadocArtifact
         }
     }
     repositories {
@@ -131,6 +144,22 @@ task sourceJar(type: Jar, overwrite: true) {
     from "$buildDir/generated/main/java"
     from processResources.outputs
     archiveName = "$archivesBaseName-$version-sources.jar"
+}
+
+javadoc {
+    options.tags = ["apiNote"]
+}
+
+task javadocJar(type: Jar) {
+    dependsOn 'javadoc'
+    from "$buildDir/docs/javadoc"
+    archiveName = "$archivesBaseName-$version-javadoc.jar"
+}
+
+publish {
+    dependsOn 'reobfJar'
+    dependsOn 'sourceJar'
+    dependsOn 'javadocJar'
 }
 
 task saveConfig {
