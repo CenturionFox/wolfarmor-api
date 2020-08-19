@@ -18,6 +18,15 @@ plugins {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'java'
+apply plugin: 'maven'
+
+configurations {
+    deployerJars
+}
+
+dependencies {
+    deployerJars 'org.apache.maven.wagon:wagon-ftp:2.2'
+}
 
 def config = null
 
@@ -25,9 +34,13 @@ file "${projectDir.getAbsolutePath()}/config.json" withReader {
     config = new JsonSlurper().parseText(it.text)
 }
 
-version = "${config.version.major}.${config.version.minor}.${config.version.patch}"
+version = "${config.minecraft.version}-${config.version.major}.${config.version.minor}.${config.version.patch}"
 group = 'dev.satyrn.wolfarmor.api'
-archivesBaseName = 'wolfarmorapi'
+archivesBaseName = 'wolfarmor-api'
+
+if (project.hasProperty('channel')) {
+    version = "${version}-${project.getProperties()['channel']}"
+}
 
 sourceCompatibility = targetCompatibility = '1.8'
 compileJava {
@@ -102,6 +115,16 @@ task sourceJar(type: Jar, overwrite: true) {
     archiveName = "$archivesBaseName-$version-sources.jar"
 }
 
+
+uploadArchives {
+    repositories.mavenDeployer {
+        configuration = configurations.deployerJars
+        repository(url: project.getProperties()['maven.url']) {
+            authentication (userName: project.getProperties()['maven.username'], password: project.getProperties()['maven.password'])
+        }
+    }
+}
+
 task saveConfig {
     doLast {
         def configFile = new File("${projectDir.getAbsolutePath()}/config.json")
@@ -111,7 +134,7 @@ task saveConfig {
 }
 
 def VERSIONING_GROUP = 'Versioning'
-def SCM_GROUP = 'sourcecontrol'
+def SCM_GROUP = 'Source Control'
 
 task incrementApiPatch {
     group VERSIONING_GROUP
