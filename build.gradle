@@ -20,13 +20,6 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'java'
 apply plugin: 'maven-publish'
 
-repositories {
-    maven {
-        name = 'ftp.satyrn.dev'
-        url = 'sftp://ftp.satyrn.dev/maven'
-    }
-}
-
 def config = null
 
 file "${projectDir.getAbsolutePath()}/config.json" withReader {
@@ -54,8 +47,15 @@ publishing {
                 username project.getProperties()['maven.username']
                 password project.getProperties()['maven.password']
             }
-            url 'sftp://ftp.satyrn.dev:22/maven'
+            url project.getProperties()['maven.url']
         }
+    }
+}
+
+repositories {
+    maven {
+        name = project.getProperties()['maven.id']
+        url = project.getProperties()['maven.url']
     }
 }
 
