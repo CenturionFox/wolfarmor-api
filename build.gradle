@@ -6,6 +6,7 @@ buildscript {
         jcenter()
         mavenCentral()
         maven { url = 'http://files.minecraftforge.net/maven' }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
@@ -14,18 +15,18 @@ buildscript {
 
 plugins {
     id 'groovy'
+    id 'net.linguica.maven-settings' version '0.5'
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'java'
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
-configurations {
-    deployerJars
-}
-
-dependencies {
-    deployerJars 'org.apache.maven.wagon:wagon-ftp:2.2'
+repositories {
+    maven {
+        name = 'ftp.satyrn.dev'
+        url = 'sftp://ftp.satyrn.dev/maven'
+    }
 }
 
 def config = null
@@ -38,8 +39,26 @@ version = "${config.minecraft.version}-${config.version.major}.${config.version.
 group = 'dev.satyrn.wolfarmor.api'
 archivesBaseName = 'wolfarmor-api'
 
-if (project.hasProperty('channel')) {
-    version = "${version}-${project.getProperties()['channel']}"
+def reobfFile = file("$buildDir/libs/$archivesBaseName-${version}.jar")
+def reobfArtifact = artifacts.add('default', reobfFile) {
+    type 'jar'
+    builtBy 'reobfJar'
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact reobfArtifact
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username project.getProperties()['maven.username']
+                password project.getProperties()['maven.password']
+            }
+            url 'sftp://ftp.satyrn.dev:22/maven'
+        }
+    }
 }
 
 sourceCompatibility = targetCompatibility = '1.8'
@@ -88,6 +107,7 @@ processResources {
     }
 }
 
+
 minecraft {
     version = "${config.minecraft.version}-${config.forge.version}"
     runDir = "run"
@@ -113,16 +133,6 @@ task sourceJar(type: Jar, overwrite: true) {
     from "$buildDir/generated/main/java"
     from processResources.outputs
     archiveName = "$archivesBaseName-$version-sources.jar"
-}
-
-
-uploadArchives {
-    repositories.mavenDeployer {
-        configuration = configurations.deployerJars
-        repository(url: project.getProperties()['maven.url']) {
-            authentication (userName: project.getProperties()['maven.username'], password: project.getProperties()['maven.password'])
-        }
-    }
 }
 
 task saveConfig {
