@@ -47,15 +47,15 @@ publishing {
                 username project.getProperties()['maven.username']
                 password project.getProperties()['maven.password']
             }
-            url project.getProperties()['maven.url']
+            url 'sftp://ftp.satyrn.dev:22/maven'
         }
     }
 }
 
 repositories {
     maven {
-        name = project.getProperties()['maven.id']
-        url = project.getProperties()['maven.url']
+        name = 'ftp.satyrn.dev'
+        url = 'sftp://ftp.satyrn.dev:22/maven'
     }
 }
 
