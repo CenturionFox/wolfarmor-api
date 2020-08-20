@@ -7,8 +7,8 @@ import dev.satyrn.wolfarmor.api.compatibility.client.LayerProvider;
 import dev.satyrn.wolfarmor.api.util.Resources;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -35,13 +35,9 @@ public class Compatibility {
     private static final Map<String, ICompatibilityProvider> compatibilityProviders = Maps.newLinkedHashMap();
 
     @SideOnly(Side.CLIENT)
-    private static final List<LayerProvider> layerOverrides = Lists.newArrayList();
+    private static List<LayerProvider> layerOverrides;
 
     private static final Logger logger = LogManager.getLogger(Resources.MOD_ID);
-
-    static {
-        layerOverrides.add(new DefaultLayerProvider());
-    }
 
     /**
      * Registers a compatibility provider with Wolf Armor and Storage
@@ -125,6 +121,7 @@ public class Compatibility {
      */
     public static void postInit(@Nonnull FMLPostInitializationEvent event) {
         if (event.getSide() == Side.CLIENT) {
+            layerOverrides = Lists.newArrayList(new DefaultLayerProvider());
             logger.info("Initializing layer providers...");
             compatibilityProviders.values().forEach(provider -> {
                 if (isModLoaded(provider.getModId())) {
