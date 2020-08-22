@@ -2,12 +2,10 @@ package dev.satyrn.wolfarmor.api.compatibility;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import dev.satyrn.wolfarmor.api.compatibility.client.DefaultLayerProvider;
 import dev.satyrn.wolfarmor.api.compatibility.client.LayerProvider;
 import dev.satyrn.wolfarmor.api.util.Resources;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
@@ -19,7 +17,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -85,10 +82,7 @@ public class Compatibility {
     @SideOnly(Side.CLIENT)
     @Nullable
     public static synchronized LayerRenderer<?> getArmorLayer(@Nonnull RenderLiving<?> renderer) {
-        Class<?> type = (Class<?>)((ParameterizedType)renderer.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-
-        Optional<LayerProvider> provider = layerOverrides.stream().filter(layerProvider -> layerProvider.getProvidesArmorLayer()
-                && layerProvider.validForClass(type)).max(new PriorityComparator());
+        Optional<LayerProvider> provider = layerOverrides.stream().filter(LayerProvider::getProvidesArmorLayer).max(new PriorityComparator());
 
         return provider.<LayerRenderer<?>>map(layerProvider -> layerProvider.getArmorLayer(renderer)).orElse(null);
     }
@@ -101,10 +95,7 @@ public class Compatibility {
     @SideOnly(Side.CLIENT)
     @Nullable
     public static synchronized LayerRenderer<?> getBackpackLayer(@Nonnull RenderLiving<?> renderer) {
-        Class<?> type = (Class<?>)((ParameterizedType)renderer.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-
-        Optional<LayerProvider> provider = layerOverrides.stream().filter(layerProvider -> layerProvider.getProvidesBackpackLayer()
-                && layerProvider.validForClass(type)).max(new PriorityComparator());
+        Optional<LayerProvider> provider = layerOverrides.stream().filter(LayerProvider::getProvidesBackpackLayer).max(new PriorityComparator());
 
         return provider.<LayerRenderer<?>>map(layerProvider -> layerProvider.getBackpackLayer(renderer)).orElse(null);
     }
@@ -121,7 +112,7 @@ public class Compatibility {
      */
     public static void postInit(@Nonnull FMLPostInitializationEvent event) {
         if (event.getSide() == Side.CLIENT) {
-            layerOverrides = Lists.newArrayList(new DefaultLayerProvider());
+            layerOverrides = Lists.newArrayList(new LayerProvider());
             logger.info("Initializing layer providers...");
             compatibilityProviders.values().forEach(provider -> {
                 if (isModLoaded(provider.getModId())) {
