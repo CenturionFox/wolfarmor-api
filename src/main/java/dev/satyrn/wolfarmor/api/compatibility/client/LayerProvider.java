@@ -23,7 +23,7 @@ public class LayerProvider implements IProvider {
 
     /**
      * Checks whether or not the provider provides an armor layer.
-     * @return {@code false} by default, if not respecified as {@code true} this provider will not be used for armor
+     * @return {@code true} by default, if not overridden as {@code false} this provider will be used for armor
      *         layers
      * @since 4.5.0-alpha
      */
@@ -31,7 +31,7 @@ public class LayerProvider implements IProvider {
 
     /**
      * Checks whether or not the provider provides a backpack layer
-     * @return {@code false} by default, if not respecified as {@code true} this provider will not be used for armor
+     * @return {@code true} by default, if not overridden as {@code false} this provider will be used for armor
      *         layers
      * @since 4.5.0-alpha
      */
